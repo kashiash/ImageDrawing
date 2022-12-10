@@ -14,7 +14,15 @@ struct Home: View {
         NavigationView{
             VStack{
                 if let Image = UIImage(data: model.imageData){
-                    
+                    Image(uiImage: ImageFile)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                    // extra button to cancel if selected image
+                        .toolbar(cont:{
+                            Button(action: {}, label: {
+                                Image(Image(systemName: "xmark"))
+                            })
+                        })
                 } else {
                     //Show picker
                     Button(action: {model.showImagePicker.toggle()}, label: {

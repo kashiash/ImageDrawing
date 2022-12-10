@@ -10,6 +10,13 @@ import SwiftUI
 class DrawingViewModel: ObservableObject {
     @Published var showImagePicker = false
     @Published var imageData: Data = Data(count: 0)
+    
+//cancel function
+    func cancelImageEditing(){
+        imageData = Data(count: 0)
+        showImagePicker.toggle()
+    }
 }
+
 
 
