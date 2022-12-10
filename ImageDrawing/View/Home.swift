@@ -13,14 +13,14 @@ struct Home: View {
     var body: some View {
         NavigationView{
             VStack{
-                if let Image = UIImage(data: model.imageData){
+                if let ImageFile = UIImage(data: model.imageData){
                     Image(uiImage: ImageFile)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     // extra button to cancel if selected image
-                        .toolbar(cont:{
-                            Button(action: {}, label: {
-                                Image(Image(systemName: "xmark"))
+                        .toolbar(content:{
+                            Button(action: {model.cancelImageEditing()}, label: {
+                                Image(systemName: "xmark")
                             })
                         })
                 } else {
