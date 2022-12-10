@@ -14,7 +14,7 @@ class DrawingViewModel: ObservableObject {
 //cancel function
     func cancelImageEditing(){
         imageData = Data(count: 0)
-        showImagePicker.toggle()
+       // showImagePicker.toggle()
     }
 }
 

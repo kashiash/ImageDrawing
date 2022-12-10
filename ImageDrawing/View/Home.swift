@@ -19,9 +19,11 @@ struct Home: View {
                         .aspectRatio(contentMode: .fit)
                     // extra button to cancel if selected image
                         .toolbar(content:{
-                            Button(action: {model.cancelImageEditing()}, label: {
-                                Image(systemName: "xmark")
-                            })
+                            ToolbarItem(placement: .navigationBarLeading){
+                                Button(action: model.cancelImageEditing, label: {
+                                    Image(systemName: "xmark")
+                                })
+                            }
                         })
                 } else {
                     //Show picker
