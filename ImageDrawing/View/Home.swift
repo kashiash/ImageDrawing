@@ -14,6 +14,7 @@ struct Home: View {
         NavigationView{
             VStack{
                 if let ImageFile = UIImage(data: model.imageData){
+                    DrawingScreen().environmentObject(model)
                     Image(uiImage: ImageFile)
                         .resizable()
                         .aspectRatio(contentMode: .fit)

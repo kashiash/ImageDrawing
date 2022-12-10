@@ -14,6 +14,7 @@
 		3F05383F2943AB290005990B /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F05383E2943AB290005990B /* Home.swift */; };
 		3F0538412943BCC30005990B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0538402943BCC30005990B /* ImagePicker.swift */; };
 		3F0538432944B7D10005990B /* DrawingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0538422944B7D10005990B /* DrawingViewModel.swift */; };
+		3F0538452944C1920005990B /* DrawingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0538442944C1920005990B /* DrawingScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		3F05383E2943AB290005990B /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		3F0538402943BCC30005990B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		3F0538422944B7D10005990B /* DrawingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingViewModel.swift; sourceTree = "<group>"; };
+		3F0538442944C1920005990B /* DrawingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			children = (
 				3F05383E2943AB290005990B /* Home.swift */,
 				3F0538402943BCC30005990B /* ImagePicker.swift */,
+				3F0538442944C1920005990B /* DrawingScreen.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			files = (
 				3F05382F2943AAC70005990B /* ContentView.swift in Sources */,
 				3F0538412943BCC30005990B /* ImagePicker.swift in Sources */,
+				3F0538452944C1920005990B /* DrawingScreen.swift in Sources */,
 				3F0538432944B7D10005990B /* DrawingViewModel.swift in Sources */,
 				3F05383F2943AB290005990B /* Home.swift in Sources */,
 				3F05382D2943AAC70005990B /* ImageDrawingApp.swift in Sources */,
