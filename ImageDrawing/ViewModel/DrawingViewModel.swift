@@ -6,15 +6,10 @@
 //
 
 import SwiftUI
-
-struct DrawingViewModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+// hold all drawing data
+class DrawingViewModel: ObservableObject {
+    @Published var showImagePicker = false
+    @Published var imageData: Data = Data(count: 0)
 }
 
-struct DrawingViewModel_Previews: PreviewProvider {
-    static var previews: some View {
-        DrawingViewModel()
-    }
-}
+
