@@ -46,12 +46,16 @@ class DrawingViewModel: ObservableObject {
             addNewBox = false
         }
         //removing if cancelled ...
-        textBoxes.removeLast()
+        // avoiding the removal; of already added...
+        if !textBoxes[currentIndex].isAdded{
+            textBoxes.removeLast()
+        }
+      
     }
     
     func saveImage(){
         //generating image from canvas and textboxes
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, 1)
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
         // canvas
         canvas.drawHierarchy(in: CGRect(origin:.zero,size:rect.size), afterScreenUpdates: true)
         // darwing textboxes

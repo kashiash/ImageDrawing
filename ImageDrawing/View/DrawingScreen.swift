@@ -17,15 +17,17 @@ struct DrawingScreen: View {
             
             GeometryReader{ proxy -> AnyView in
                 
-                let size = proxy.frame(in: .global).size
+                let size = proxy.frame(in: .global)
                 
                 DispatchQueue.main.async{
-                    model.rect = proxy.frame(in: .global)
+                    if model.rect == .zero {
+                        model.rect = size
+                    }
                 }
                 
                 return AnyView(
                     ZStack{
-                        CanvasView(canvas: $model.canvas,imageData: $model.imageData,toolPicker: $model.toolPicker, rect: size)
+                        CanvasView(canvas: $model.canvas,imageData: $model.imageData,toolPicker: $model.toolPicker, rect: size.size)
                         //custome text and objets
                         ForEach(model.textBoxes){ box in
                             Text(model.textBoxes[model.currentIndex].id == box.id && model.addNewBox ? "" : box.text)
@@ -44,6 +46,18 @@ struct DrawingScreen: View {
                                     //saving the last offset for exact drag position...
                                     model.textBoxes[getIndex(textBox: box)].lastOffset = value.translation
                                 }))
+                            
+                            // editing the typed one
+                                .onLongPressGesture{
+                                    //closing toolpicker
+                                    model.toolPicker.setVisible(false, forFirstResponder: model.canvas)
+                                    model.canvas.resignFirstResponder()
+                                    
+                                    model.currentIndex = getIndex(textBox: box)
+                                    withAnimation{
+                                        model.addNewBox = true
+                                    }
+                                }
                         }
                     }
                 )

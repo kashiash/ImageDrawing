@@ -55,7 +55,8 @@ struct Home: View {
                 
                 HStack{
                     Button(action: {
-                        
+                        // seeting is added
+                        model.textBoxes[model.currentIndex].isAdded = true
                         //closing the view ...
                         model.toolPicker.setVisible(true, forFirstResponder: model.canvas)
                         model.canvas.becomeFirstResponder()
