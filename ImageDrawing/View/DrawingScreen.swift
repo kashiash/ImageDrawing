@@ -24,13 +24,16 @@ struct DrawingScreen_Previews: PreviewProvider {
     }
 }
 
+
+
+
 struct CanvasView: UIViewRepresentable {
     
     @Binding var canvas: PKCanvasView
     @Binding var imageData: Data
     @Binding var toolPicker: PKToolPicker
     
-    func makeUIView(context: Context) -> some PKCanvasView {
+    func makeUIView(context: Context) ->  PKCanvasView {
         canvas.isOpaque = false
         canvas.backgroundColor = .clear
         canvas.drawingPolicy = .anyInput
