@@ -35,6 +35,7 @@ class DrawingViewModel: ObservableObject {
     func cancelImageEditing(){
         imageData = Data(count: 0)
         canvas = PKCanvasView()
+        textBoxes.removeAll()
         // showImagePicker.toggle()
     }
     func cancelTextView(){
