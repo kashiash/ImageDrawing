@@ -13,19 +13,40 @@ struct DrawingScreen: View {
     var body: some View {
         ZStack{
             //UIkit pencil darwing view
-
+            
             
             GeometryReader{ proxy -> AnyView in
                 
                 let size = proxy.frame(in:   .global   ).size
                 
                 return AnyView(
-                    CanvasView(canvas: $model.canvas,imageData: $model.imageData,toolPicker: $model.toolPicker, rect: size)
+                    ZStack{
+                        CanvasView(canvas: $model.canvas,imageData: $model.imageData,toolPicker: $model.toolPicker, rect: size)
+                        //custome text and objets
+                        
+                    }
                 )
             }
             
             
         }
+        .toolbar(content: {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {}, label: {
+                    Text("Save")
+                })
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+              Button(action: {}, label: {
+                  Image(systemName: "v.circle")
+              })
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+              Button(action: {}, label: {
+                Image(systemName: "a.circle")
+              })
+            }
+        })
     }
 }
 
@@ -77,7 +98,7 @@ struct CanvasView: UIViewRepresentable {
         
     }
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
-
+        
     }
 }
 
