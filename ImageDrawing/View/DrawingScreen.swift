@@ -13,7 +13,18 @@ struct DrawingScreen: View {
     var body: some View {
         ZStack{
             //UIkit pencil darwing view
-            CanvasView(canvas: $model.canvas,imageData: $model.imageData,toolPicker: $model.toolPicker)
+
+            
+            GeometryReader{ proxy -> AnyView in
+                
+                let size = proxy.frame(in:   .global   ).size
+                
+                return AnyView(
+                    CanvasView(canvas: $model.canvas,imageData: $model.imageData,toolPicker: $model.toolPicker, rect: size)
+                )
+            }
+            
+            
         }
     }
 }
@@ -33,6 +44,15 @@ struct CanvasView: UIViewRepresentable {
     @Binding var imageData: Data
     @Binding var toolPicker: PKToolPicker
     
+    // rect size
+    
+    var rect: CGSize
+    
+    
+    
+    
+    
+    
     func makeUIView(context: Context) ->  PKCanvasView {
         canvas.isOpaque = false
         canvas.backgroundColor = .clear
@@ -43,6 +63,7 @@ struct CanvasView: UIViewRepresentable {
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
         if let image = UIImage(data: imageData){
             let imageView = UIImageView(image: image)
+            imageView.frame = CGRect(x: 0, y: 0, width: rect.width, height: rect.height)
             imageView.contentMode = .scaleAspectFit
             imageView.clipsToBounds = true;
             
@@ -56,3 +77,5 @@ struct CanvasView: UIViewRepresentable {
         }
     }
 }
+
+
