@@ -17,7 +17,11 @@ struct DrawingScreen: View {
             
             GeometryReader{ proxy -> AnyView in
                 
-                let size = proxy.frame(in:   .global   ).size
+                let size = proxy.frame(in: .global).size
+                
+                DispatchQueue.main.async{
+                    model.rect = proxy.frame(in: .global)
+                }
                 
                 return AnyView(
                     ZStack{
@@ -49,7 +53,7 @@ struct DrawingScreen: View {
         }
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {}, label: {
+                Button(action: model.saveImage, label: {
                     Text("Save")
                 })
             }
