@@ -103,6 +103,9 @@ struct Home: View {
         .sheet(isPresented: $model.showImagePicker, content: {
             ImagePicker(showPicker: $model.showImagePicker, imageData: $model.imageData)
         })
+        .alert(isPresented: $model.showAlert, content: {
+            Alert(title: Text("Message"),message: Text(model.message),dismissButton: .destructive(Text("OK")))
+        })
     }
 }
 
