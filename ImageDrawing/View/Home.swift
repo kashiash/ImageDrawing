@@ -48,7 +48,7 @@ struct Home: View {
                 Color.black.opacity(0.75).ignoresSafeArea()
                 // add and cancel buttons
                 TextField("Type Here", text: $model.textBoxes[model.currentIndex].text)
-                    .font(.system(size:35))
+                    .font(.system(size:35, weight:model.textBoxes[model.currentIndex].isBold ? .bold : .regular))
                     .colorScheme(.dark)
                     .foregroundColor(model.textBoxes[model.currentIndex].textColor)
                     .padding()
@@ -82,9 +82,18 @@ struct Home: View {
                     })
                 }
                 .overlay(
-                //Color Picker
-                    ColorPicker("", selection: $model.textBoxes[model.currentIndex].textColor)
-                        .labelsHidden()
+                    HStack(spacing: 15){
+                        //Color Picker
+                        ColorPicker("", selection: $model.textBoxes[model.currentIndex].textColor)
+                            .labelsHidden()
+                        Button(action: {
+                            model.textBoxes[model.currentIndex].isBold.toggle()
+                        }, label: {
+                            Text(model.textBoxes[model.currentIndex].isBold ? "Normal" : "Bold")
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                        })
+                    }
                     
                 )
                 .frame(maxHeight:.infinity,alignment: .top)

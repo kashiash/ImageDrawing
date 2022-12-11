@@ -27,6 +27,10 @@ class DrawingViewModel: ObservableObject {
     //Saving image frame size
     @Published var rect: CGRect = .zero
     
+    //Alert
+    @Published var showAlert = false
+    @Published var message = ""
+    
     //cancel function
     func cancelImageEditing(){
         imageData = Data(count: 0)
@@ -50,6 +54,29 @@ class DrawingViewModel: ObservableObject {
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 1)
         // canvas
         canvas.drawHierarchy(in: CGRect(origin:.zero,size:rect.size), afterScreenUpdates: true)
+        // darwing textboxes
+        let SwiftUIView = ZStack{
+            ForEach(textBoxes){ [self] box in
+                
+                Text(textBoxes[currentIndex].id == box.id && addNewBox ? "" : box.text)
+                    .font(.system(size:30))
+                    .fontWeight(box.isBold ? .bold  : .none)
+                    .foregroundColor(box.textColor)
+                    .offset(box.offset)
+                
+            }
+        }
+        
+        let controller = UIHostingController(rootView: SwiftUIView).view!
+        controller.frame = rect
+        
+        //clearing bg...
+        controller.backgroundColor = .clear
+        canvas.backgroundColor = .clear
+        
+        controller.drawHierarchy(in: CGRect(origin: .zero
+                                            , size: rect.size), afterScreenUpdates: true)
+        
         //getting image
         let generatedImage = UIGraphicsGetImageFromCurrentImageContext()
         //ending reender ...
@@ -58,6 +85,8 @@ class DrawingViewModel: ObservableObject {
             //saving image...
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
             print("hura !")
+            self.message = "Saved Successfully !!!"
+            self.showAlert.toggle()
         }
         
     }
