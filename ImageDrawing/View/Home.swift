@@ -11,36 +11,84 @@ import SwiftUI
 struct Home: View {
     @StateObject var model = DrawingViewModel()
     var body: some View {
-        NavigationView{
-            VStack{
-                if let ImageFile = UIImage(data: model.imageData){
-                 
-                    DrawingScreen().environmentObject(model)
+        ZStack{
+            NavigationView{
+                VStack{
+                    if let _ = UIImage(data: model.imageData){
+                     
+                        DrawingScreen().environmentObject(model)
 
-                    // extra button to cancel if selected image
-                        .toolbar(content:{
-                            ToolbarItem(placement: .navigationBarLeading){
-                                Button(action: model.cancelImageEditing, label: {
-                                    Image(systemName: "xmark")
-                                })
-                            }
+                        // extra button to cancel if selected image
+                            .toolbar(content:{
+                                ToolbarItem(placement: .navigationBarLeading){
+                                    Button(action: model.cancelImageEditing, label: {
+                                        Image(systemName: "xmark")
+                                    })
+                                }
+                            })
+                    } else {
+                        //Show picker
+                        Button(action: {model.showImagePicker.toggle()}, label: {
+                            Image(systemName: "plus")
+                                .font(.title)
+                                .foregroundColor(.black)
+                                .frame(width: 70,height: 70)
+                                .background(Color.white)
+                                .cornerRadius(10)
+                                .shadow(color: Color.black.opacity(0.07), radius: 5, x: 5, y:5)
+                                .shadow(color: Color.black.opacity(0.07), radius: 5, x: -5, y:-5)
                         })
-                } else {
-                    //Show picker
-                    Button(action: {model.showImagePicker.toggle()}, label: {
-                        Image(systemName: "plus")
-                            .font(.title)
-                            .foregroundColor(.black)
-                            .frame(width: 70,height: 70)
-                            .background(Color.white)
-                            .cornerRadius(10)
-                            .shadow(color: Color.black.opacity(0.07), radius: 5, x: 5, y:5)
-                            .shadow(color: Color.black.opacity(0.07), radius: 5, x: -5, y:-5)
+                    }
+                        
+                }
+                .navigationTitle("Image Editor")
+            }
+            
+            if model.addNewBox{
+                Color.black.opacity(0.75).ignoresSafeArea()
+                // add and cancel buttons
+                TextField("Type Here", text: $model.textBoxes[model.currentIndex].text)
+                    .font(.system(size:35))
+                    .colorScheme(.dark)
+                    .foregroundColor(model.textBoxes[model.currentIndex].textColor)
+                    .padding()
+                
+                HStack{
+                    Button(action: {
+                        
+                        //closing the view ...
+                        model.toolPicker.setVisible(true, forFirstResponder: model.canvas)
+                        model.canvas.becomeFirstResponder()
+                        
+                        withAnimation{
+                            model.addNewBox = false
+                            
+                        }
+                        
+                    }, label: {
+                        Text("Add")
+                            .fontWeight(.heavy)
+                            .foregroundColor(.white)
+                            .padding()
+                    })
+                    
+                    Spacer()
+                    
+                    Button(action: model.cancelTextView, label: {
+                        Text("Cancel")
+                            .fontWeight(.heavy)
+                            .foregroundColor(.white)
+                            .padding()
                     })
                 }
+                .overlay(
+                //Color Picker
+                    ColorPicker("", selection: $model.textBoxes[model.currentIndex].textColor)
+                        .labelsHidden()
                     
+                )
+                .frame(maxHeight:.infinity,alignment: .top)
             }
-            .navigationTitle("Image Editor")
         }
         //Showing picker
         .sheet(isPresented: $model.showImagePicker, content: {

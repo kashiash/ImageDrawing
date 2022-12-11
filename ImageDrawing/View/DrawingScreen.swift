@@ -23,7 +23,24 @@ struct DrawingScreen: View {
                     ZStack{
                         CanvasView(canvas: $model.canvas,imageData: $model.imageData,toolPicker: $model.toolPicker, rect: size)
                         //custome text and objets
-                        
+                        ForEach(model.textBoxes){ box in
+                            Text(model.textBoxes[model.currentIndex].id == box.id && model.addNewBox ? "" : box.text)
+                                .font(.system(size:30))
+                                .fontWeight(box.isBold ? .bold : .none)
+                                .foregroundColor(box.textColor)
+                                .offset(box.offset)
+                            //drag gesture
+                                .gesture(DragGesture().onChanged({ (value) in
+                                    let current = value.translation
+                                    let lastOffset = box.lastOffset
+                                    let newTranslation = CGSize(width: lastOffset.width + current.width, height: lastOffset.height + current.height)
+                                    
+                                    model.textBoxes[getIndex(textBox: box)].offset = newTranslation
+                                }).onEnded({ (value) in
+                                    //saving the last offset for exact drag position...
+                                    model.textBoxes[getIndex(textBox: box)].lastOffset = value.translation
+                                }))
+                        }
                     }
                 )
             }
@@ -36,17 +53,33 @@ struct DrawingScreen: View {
                     Text("Save")
                 })
             }
+
             ToolbarItem(placement: .navigationBarTrailing) {
-              Button(action: {}, label: {
-                  Image(systemName: "v.circle")
-              })
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-              Button(action: {}, label: {
+              Button(action: {
+                  //creating new one TextBox
+                  model.textBoxes.append(TextBox())
+                  model.currentIndex = model.textBoxes.count - 1
+                  
+                  withAnimation{
+                      model.addNewBox.toggle()
+                      
+                  }
+                  //closing the toolbar ...
+                  model.toolPicker.setVisible(false,forFirstResponder: model.canvas)
+                  model.canvas.resignFirstResponder()
+              }, label: {
                 Image(systemName: "a.circle")
               })
             }
         })
+    }
+    
+    func getIndex(textBox: TextBox)->Int{
+        let index = model.textBoxes.firstIndex{ (box)->Bool in
+            return textBox.id == box.id
+            
+        } ?? 0
+        return index
     }
 }
 
